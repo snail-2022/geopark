@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中国世界地质遗迹公园总览</title>
+    <script type="text/javascript">
+        window._AMapSecurityConfig = {
+            securityJsCode: '368f9c365130ab5332d436503d0d7e4c',
+        }
+    </script>
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=c75cfe9e7045c70595d8dc38941b0e64"></script>
+    <script src="./lianjie3.java"></script>
+    <style>
+        html,
+        body,
+        #container {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+
+    <script type="module">
+        var map = new AMap.Map("container", {
+            mapStyle: "amap://styles/darkblue", // 设置地图的显示样式
+        });
+
+        // 从后端获取地理数据
+        fetch('/accounts/get_worldgeopark_data/')
+            .then(response => response.json())
+            .then(data => {
+                for (var i = 0, marker; i < data.length; i++) {
+                    var lnglat = [data[i].longitude, data[i].latitude];
+                    var marker = new AMap.Marker({
+                        position: lnglat,
+                        name: data[i].name,
+                        map: map
+                    });
+                    marker.content = '<div><h3>名称：' + data[i].name + '</h3></div>';
+                    marker.content += '<div>经度：' + lnglat[0] + '</div>';
+                    marker.content += '<div>纬度：' + lnglat[1] + '</div>';
+                    marker.on('mouseover', infoOpen);
+                    marker.on('mouseout', infoClose);
+                    marker.on('click', newMAp);
+                }
+
+                function newMAp(e) {
+                    map.setZoomAndCenter(15, e.target.getPosition());
+
+                    var infoWindow = new AMap.InfoWindow({ offset: new AMap.Pixel(0, -30) });
+                    infoWindow.setContent(e.target.content);
+                    infoWindow.open(map, e.target.getPosition());
+                }
+
+                function infoClose(e) {
+                    infoWindow.close(map, e.target.getPosition());
+                }
+
+                function infoOpen(e) {
+                    infoWindow.setContent(e.target.content);
+                    infoWindow.open(map, e.target.getPosition());
+                }
+
+                map.setFitView();
+            })
+            .catch(error => {
+                console.error('获取数据失败:', error);
+            });
+    </script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录</title>
+</head>
+<body>
+  <form action="/accounts/index/" method="post">
+      {% csrf_token %}
+      <p><label>用户名：</label><input type="text" name="user" required/></p>
+      <p><label>密码：</label><input type="password" name="pwd" required/></p>
+      <input type="submit" value="提交">
+  </form>
+
+  <!-- 添加注册按钮 -->
+  <button onclick="location.href='/accounts/toregister/'">注册</button>
+</body>
+</html>
