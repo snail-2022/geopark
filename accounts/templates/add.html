@@ -1,0 +1,36 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>地质遗迹管理系统</title>
+    <link rel="stylesheet" href="{% static 'css/add.css' %}">
+</head>
+<body>
+    <form method="post" action="/accounts/toadd/">
+        <div id="background" >
+            <div id="dl">
+                <div class="text">添加地质公园</div>
+                <br>
+
+                <div class="text">  名称：<input class="input"  type="text" name="name"></input></div>
+                <br>
+                <div class="text">  地点：<input class="input"  type="text" name="address"></input></div>
+                <br>
+                <div class="text">  编码：<input class="input"  type="text" name="node"></input></div>
+                <br>
+                <div class="text">  批次：<input class="input"  type="text" name="time"></input></div>
+                <br>
+               <div class="text">   保护对象：<input class="input"  type="text" name="proctect"></input></div>
+                <br>
+               <div class="text">   人文景观：<input class="input"  type="text" name="sence"></input></div>
+                <br>
+                <div class="but">
+               <a href="success.html" target="_blank"><button type="submit" >提交</button></a>
+                </div>
+            </div>
+        </div>
+    </form>>
+</body>
+</html>

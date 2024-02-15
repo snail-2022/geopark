@@ -1,0 +1,87 @@
+body{
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+#backgroung{
+    margin: 0;
+    padding: 0;
+    border: 0;
+   vertical-align: baseline;
+    height:600px;
+    background-attachment: fixed;
+    background-size: cover;
+    background-image:url("../images/beijing.jpg")
+}
+#dl{
+    width:300px;
+            height:300px;
+           background-image: linear-gradient(120deg, #50fdff 0%, #fce5ff 100%);
+            position: absolute;
+            top:0;
+            bottom:0;
+            left:0;
+            right: 0;
+            margin:auto;
+            border-radius: 10%;
+            background: rgba(0, 0, 0, 0.06);
+            box-shadow:10px 10px 1px rgba(97, 91, 100, 0.5);
+ 
+}
+.text{
+    color:white;
+    display: flex;
+    justify-content: center;
+    font-style: inherit;
+}
+.input{
+    height:10%;
+    width:60%;
+}
+.but{
+    display: flex;
+    justify-content: center;
+}
+.input-box{
+    width:500px;
+
+}
+
+.table{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table caption{
+    font-size: 2em;
+    font-weight: bold;
+    margin: 1em 0;
+}
+
+.th,td{
+    border: 1px solid #999;
+    text-align: center;
+    padding: 20px 0;
+}
+
+.table thead tr{
+    background-color: #008c8c;
+    color: #fff;
+}
+
+.table tbody tr:nth-child(odd){
+    background-color: #eee;
+}
+
+.table tbody tr:hover{
+    background-color: #ccc;
+}
+
+.table tbody tr td:first-child{
+    color: #f40;
+}
+
+.table tfoot tr td{
+    text-align: right;
+    padding-right: 20px;
+}

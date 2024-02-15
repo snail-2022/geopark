@@ -1,0 +1,40 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+   
+    <title>查询页面</title>
+   
+
+    <link rel="stylesheet" href="{% static 'css/search.css' %}">
+
+</head>
+
+
+<body>
+    <form method="post">
+        <div id="backgroung" >
+            <div id="dl">
+                <div class="text">地质遗迹查询</div>
+                <br>
+                <br>
+                <div class="text1" >名称：<input class="input"  type="text" name="name"></input></div>
+                <br>
+                <div class="text1" >地点：<input class="input"  type="text" name="name"></input></div>
+                <br>
+                <div class="text1" >编码：<input class="input"  type="text" name="name"></input></div>
+                <br>
+
+                <div class="but">
+                <a href="./result.html">
+                <button class="submit" >确定</button></a></div>
+            </div>
+        </div>
+    </form>
+</body>
+
+
+
+</html>

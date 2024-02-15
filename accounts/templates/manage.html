@@ -1,0 +1,240 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>地质遗迹管理系统</title>
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/common.css' %}">
+    <link rel="stylesheet" href="{% static 'css/data_text.css' %}">
+    <link rel="stylesheet" href="{% static 'css/foundation-datepicker.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+</head>
+<body>
+   
+
+
+<!--header开始-->
+<div class="header">
+    <div class="header_logo fl">
+    </div>
+    <div class="header_nav fl">
+        <ul>
+            <li>
+                <img src="{% static 'images/nav_1.png' %}">
+                <a  class="nav_current">数据概览</a>
+            </li>
+            <li>
+                <img src="{% static 'images/nav_2.png' %}" >
+                <a>地质公园和景点</a>
+                <ul>
+                    <li>
+                        <a href="{% url 'manage_page' %}">地质公园管理页面</a>
+                        
+                        
+                    </li>
+                    <li>
+                        <a >景点管理</a>
+                   
+                    </li>
+                </ul>
+                
+            </li>
+            <li>
+                <img src="{% static 'images/nav_3.png' %}" >
+                <a >科普知识和教育</a>
+                <ul>
+                    <li>
+                        <a>地质知识</a>
+                        
+                    </li>
+                    <li>
+                        <a >生物多样性知识</a>
+                        
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <img src="{% static 'images/nav_4.png' %}">
+                <a>游客服务</a>
+                <ul>
+                    <li>
+                        <a >景区购票</a>
+                        
+                    </li>
+                    <li>
+                        <a >景区交通</a>
+                        
+                    </li>
+                    <li>
+                        <a >酒店信息</a>
+                        
+                    </li>
+                    <li>
+                        <a>景区餐饮</a>
+                        
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <img src="{% static 'images/nav_5.png' %}" >
+                <a>多媒体资源</a>
+                <ul>
+                    <li><a>精美图片</a></li>
+                    <li><a >精选视频</a></li>
+                    <li><a >地图下载</a></li>
+                </ul>
+            </li>
+            <li>
+                <img src="{% static 'images/nav_6.png' %}" >
+                <a>地质价值</a>
+            </li>
+            <li>
+                <img src="{% static 'images/nav_7.png' %}" >
+                <a >查询统计</a>
+            </li>
+           
+            <li>
+                <img src="{% static 'images/nav_9.png' %}">
+                <a >设置</a>
+                <ul>
+                    <li>
+                        <a >平台管理</a>
+                        
+                    </li>
+                    <li>
+                        <a >设备管理</a>
+                        
+                    </li>
+                    <li><a>系统设置</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="header_myself fr">
+        <p>用户：管理员</p>
+        <a  data-toggle="modal" data-target=".bs-example-modal-sm">注销 &nbsp;<span class="caret"></span></a>
+    </div>
+</div>
+<!--header结束-->
+ <div id="background" >
+            <div id="dl">
+                <div class="text">
+                    <h1>系统功能选择</h1>
+                </div>
+                <br>
+                <div class="but">
+                    <a href="{% url 'add_page' %}" target="_blank"><button>添加地质公园</button></a>
+                </div>
+                <br>
+                <div class="but">
+                    <a href="{% url 'search_page' %}" target="_blank"><button>查询地质公园</button></a>
+                </div>
+            <br>
+            <div class="but">
+                <a href="{% url 'detele_page' %}" target="_blank"><button>删除地质公园</button></a>
+            </div>
+            <br>
+            <div class="but">
+            <a href="{% url 'list_page' %}" target="_blank"><button>展示地质公园目录</button></a>
+            </div>
+                <br>
+            </div>
+        </div>
+
+        
+
+</body>
+
+
+
+
+
+
+
+
+<!--
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <title>操作成功</title>
+   </head>
+   <body>
+   <form>
+      <div class="xs">
+         操作成功！
+      </div>
+      <script>alert("操作成功！")</script>
+   </form>
+-->
+<!--注销模态框  开始-->
+<div class="modal fade bs-example-modal-sm" id="myModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">注销</h4>
+          </div>
+          <div class="modal-body">
+              <p>确认退出该系统吗？</p>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+              <button type="button" class="btn btn-primary">确认</button>
+          </div>
+      </div>
+  </div>
+</div>
+<!--注销模态框  结束-->
+
+
+
+</html>
+
+
+
+<script src="{% static 'js/jquery-2.2.1.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/common.js' %}"></script>
+<script src="{% static 'js/echarts.min.js' %}"></script>
+<script src="{% static 'js/echart.js' %}"></script>
+<script src="{% static 'js/china.js' %}"></script>
+<script src="{% static 'js/foundation-datepicker.js' %}"></script>
+<script src="{% static 'js/foundation-datepicker.zh-CN.js' %}"></script>
+<script>
+    $('#demo-1').fdatepicker();
+
+    var nowTemp = new Date();
+    var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+    var checkin = $('#dpd1').fdatepicker({
+        onRender: function (date) {
+            return date.valueOf() < now.valueOf() ? 'disabled' : '';
+        }
+    }).on('changeDate', function (ev) {
+        if (ev.date.valueOf() > checkout.date.valueOf()) {
+            var newDate = new Date(ev.date)
+            newDate.setDate(newDate.getDate() + 1);
+            checkout.update(newDate);
+        }
+        checkin.hide();
+        $('#dpd2')[0].focus();
+    }).data('datepicker');
+    var checkout = $('#dpd2').fdatepicker({
+        onRender: function (date) {
+            return date.valueOf() <= checkin.date.valueOf() ? 'disabled' : '';
+        }
+    }).on('changeDate', function (ev) {
+        checkout.hide();
+    }).data('datepicker');
+</script>
+
+
+
+
+
+</html>

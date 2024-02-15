@@ -1,101 +1,247 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/common.css' %}">
+    <link rel="stylesheet" href="{% static 'css/data_text.css' %}">
+    <link rel="stylesheet" href="{% static 'css/foundation-datepicker.css' %}">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>中国世界地质遗迹公园总览</title>
     <script type="text/javascript">
         window._AMapSecurityConfig = {
-            securityJsCode:'368f9c365130ab5332d436503d0d7e4c',
+            securityJsCode: '368f9c365130ab5332d436503d0d7e4c',
         }
-</script>
-<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=c75cfe9e7045c70595d8dc38941b0e64"
-></script>
+    </script>
+    <script type="text/javascript"
+        src="https://webapi.amap.com/maps?v=1.4.15&key=c75cfe9e7045c70595d8dc38941b0e64"></script>
 
-<script src="./lianjie3.java"></script>
-
-
-
-<style>
-    html,
-    body,
-    #container{
-          width: 100%;
-          height: 100%;
-    }
-
-</style>
-
+    <style>
+        html,
+        body,
+        #container {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
 </head>
+
 <body>
-    <!-- <h1>MySQL 查询结果</h1>
-    <ul id="result"></ul> -->
+    <!--header开始-->
+    <div class="header">
+        <div class="header_logo fl">
+        </div>
+        <div class="header_nav fl">
+            <ul>
+                <li>
+                    <img src="{% static 'images/nav_1.png' %}">
+                    <a class="nav_current">数据概览</a>
+                </li>
+                <li>
+                    <img src="{% static 'images/nav_2.png' %}">
+                    <a>地质公园和景点</a>
+                    <ul>
+                        <li>
+                            <a href="{% url 'manage_page' %}">地质公园管理页面</a>
+
+
+
+                        </li>
+                        <li>
+                            <a>景点管理</a>
+
+                        </li>
+                    </ul>
+
+                </li>
+                <li>
+                    <img src="{% static 'images/nav_3.png' %}">
+                    <a>科普知识和教育</a>
+                    <ul>
+                        <li>
+                            <a>地质知识</a>
+
+                        </li>
+                        <li>
+                            <a>生物多样性知识</a>
+
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <img src="{% static 'images/nav_4.png' %}">
+                    <a>游客服务</a>
+                    <ul>
+                        <li>
+                            <a>景区购票</a>
+
+                        </li>
+                        <li>
+                            <a>景区交通</a>
+
+                        </li>
+                        <li>
+                            <a>酒店信息</a>
+
+                        </li>
+                        <li>
+                            <a>景区餐饮</a>
+
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <img src="{% static 'images/nav_5.png' %}">
+                    <a>多媒体资源</a>
+                    <ul>
+                        <li><a>精美图片</a></li>
+                        <li><a>精选视频</a></li>
+                        <li><a></a>地图下载</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <img src="{% static 'images/nav_6.png' %}">
+                    <a>地质价值</a>
+                </li>
+                <li>
+                    <img src="{% static 'images/nav_7.png' %}">
+                    <a>查询统计</a>
+                </li>
+
+                <li>
+                    <img src=" {% static 'images/nav_9.png' %}">
+                        <a>设置</a>
+                        <ul>
+                            <li>
+                                <a>平台管理</a>
+
+                            </li>
+                            <li>
+                                <a>设备管理</a>
+
+                            </li>
+                            <li><a>系统设置</a></li>
+                        </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="header_myself fr">
+            <p>用户：管理员</p>
+            <a data-toggle="modal" data-target=".bs-example-modal-sm">注销 &nbsp;<span class="caret"></span></a>
+        </div>
+    </div>
+    <!--header结束-->
+
+    <!--注销模态框  开始-->
+    <div class="modal fade bs-example-modal-sm" id="myModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">注销</h4>
+                </div>
+                <div class="modal-body">
+                    <p>确认退出该系统吗？</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary">确认</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--注销模态框  结束-->
 
     <div id="container"></div>
-   
-   <script type="module">
+
+    <script type="module">
         var map = new AMap.Map("container", {
-    mapStyle: "amap://styles/darkblue", //设置地图的显示样式
-    });
-
-
-    // async function fetchData() {
-    //   const response = await fetch('/query');
-    //   const data = await response.json();
-    //   const resultElement = document.getElementById('result');
-    //   data.forEach(row => {
-    //     const li = document.createElement('li');
-    //     li.textContent = `Name: ${row.name}, lng: ${row.lng}, lat: ${row.lat}`;
-    //     resultElement.appendChild(li);
-    //   });
-    // }
-
-    // fetchData().catch(error => {
-    //   console.error('查询失败:', error);
-    // });
-
-
-   	//点标记与信息窗体的创建与添加
-    var infoWindow = new AMap.InfoWindow({
-    offset: new AMap.Pixel(0, -30)
-    });
-
-    for (var i = 0, marker; i < lnglats.length; i++) {
-        var marker = new AMap.Marker({
-            position: lnglats[i],
-            name:name_park[i],
-            map: map
+            mapStyle: "amap://styles/darkblue", // 设置地图的显示样式
         });
-        marker.content = '<div><h3>名称：'+name_park[i]+'</h3></div>';
-        marker.content += '<div>经度：'+lnglats[i][0]+'</div>';
-        marker.content += '<div>纬度：'+lnglats[i][1]+'</div>';
-        marker.on('mouseover', infoOpen);
-		//注释后打开地图时默认关闭信息窗体
-		marker.on('mouseout', infoClose);
-		marker.on('click', newMAp);
-    }
-    function newMAp(e) {
-		map.setZoomAndCenter(15, e.target.getPosition());
-		
-		var infoWindow = new AMap.InfoWindow({offset: new AMap.Pixel(0, -30)});
-		infoWindow.setContent(e.target.content);
-		infoWindow.open(map, e.target.getPosition());	
-	}
-    function infoClose(e) {
-		infoWindow.close(map, e.target.getPosition());
-	}
-    function infoOpen(e) {
-        infoWindow.setContent(e.target.content);
-        infoWindow.open(map, e.target.getPosition());
-    }
-    		map.setFitView();
- 	function closeInfoWindow() {
-        map.clearInfoWindow();
-    };
 
-    </script> 
-    
+        // 从后端获取地理数据
+        fetch('/accounts/get_worldgeopark_data/')
+            .then(response => response.json())
+            .then(data => {
+                for (var i = 0, marker; i < data.length; i++) {
+                    var lnglat = [data[i].longitude, data[i].latitude];
+                    var marker = new AMap.Marker({
+                        position: lnglat,
+                        name: data[i].name,
+                        map: map
+                    });
+                    marker.content = '<div><h3>名称：' + data[i].name + '</h3></div>';
+                    marker.content += '<div>经度：' + lnglat[0] + '</div>';
+                    marker.content += '<div>纬度：' + lnglat[1] + '</div>';
+                    marker.on('mouseover', infoOpen);
+                    marker.on('mouseout', infoClose);
+                    marker.on('click', newMAp);
+                }
 
-    
+                function newMAp(e) {
+                    map.setZoomAndCenter(15, e.target.getPosition());
+
+                    var infoWindow = new AMap.InfoWindow({ offset: new AMap.Pixel(0, -30) });
+                    infoWindow.setContent(e.target.content);
+                    infoWindow.open(map, e.target.getPosition());
+                }
+
+                function infoClose(e) {
+                    infoWindow.close(map, e.target.getPosition());
+                }
+
+                function infoOpen(e) {
+                    infoWindow.setContent(e.target.content);
+                    infoWindow.open(map, e.target.getPosition());
+                }
+
+                map.setFitView();
+            })
+            .catch(error => {
+                console.error('获取数据失败:', error);
+            });
+    </script>
 </body>
+<script src="{% static 'js/jquery-2.2.1.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/common.js' %}"></script>
+<script src="{% static 'js/echarts.min.js' %}"></script>
+<script src="{% static 'js/echart.js' %}"></script>
+<script src="{% static 'js/china.js' %}"></script>
+<script src="{% static 'js/foundation-datepicker.js' %}"></script>
+<script src="{% static 'js/foundation-datepicker.zh-CN.js' %}"></script>
+<script>
+    $('#demo-1').fdatepicker();
+
+    var nowTemp = new Date();
+    var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+    var checkin = $('#dpd1').fdatepicker({
+        onRender: function (date) {
+            return date.valueOf() < now.valueOf() ? 'disabled' : '';
+        }
+    }).on('changeDate', function (ev) {
+        if (ev.date.valueOf() > checkout.date.valueOf()) {
+            var newDate = new Date(ev.date)
+            newDate.setDate(newDate.getDate() + 1);
+            checkout.update(newDate);
+        }
+        checkin.hide();
+        $('#dpd2')[0].focus();
+    }).data('datepicker');
+    var checkout = $('#dpd2').fdatepicker({
+        onRender: function (date) {
+            return date.valueOf() <= checkin.date.valueOf() ? 'disabled' : '';
+        }
+    }).on('changeDate', function (ev) {
+        checkout.hide();
+    }).data('datepicker');
+</script>
 </html>
