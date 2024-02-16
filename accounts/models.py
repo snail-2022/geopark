@@ -11,6 +11,10 @@ class Worldgeopark(models.Model):
     image_description_path = models.CharField(max_length=255, blank=True, null=True)
     longitude = models.FloatField(blank=True, null=True)
     latitude = models.FloatField(blank=True, null=True)
+    address = models.CharField(max_length=255, null=True, blank=True)
+    protect = models.CharField(max_length=255, null=True, blank=True)
+    scene = models.CharField(max_length=255, null=True, blank=True)
+
 
     class Meta:
         managed = False

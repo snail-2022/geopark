@@ -15,5 +15,7 @@ urlpatterns = [
     path('delete/', views.detele_page, name='detele_page'),
     path('list/', views.list_page, name='list_page'),
     path('toadd/', views.add_worldgeopark),
+    path('success/', views.success_page,name='success_page'),
+    path('todelete/', views.delete_worldgeopark),
 
 ]

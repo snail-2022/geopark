@@ -1,7 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
+from django.contrib import messages
+
 
 
 # Create your views here.
@@ -78,7 +80,6 @@ def add_worldgeopark(request):
         # 获取表单提交的数据
         name = request.POST.get('name')
         address = request.POST.get('address')
-        time = request.POST.get('time')
         protect = request.POST.get('protect')
         scene = request.POST.get('scene')
 
@@ -86,7 +87,6 @@ def add_worldgeopark(request):
         worldgeopark = Worldgeopark(
             name=name,
             address=address,
-            time=time,
             protect=protect,
             scene=scene
         )
@@ -95,3 +95,19 @@ def add_worldgeopark(request):
         # 重定向到成功页面或其他页面
         return redirect('success_page')
 
+def success_page(request):
+    return render(request, 'success.html')
+
+def delete_worldgeopark(request):
+    if request.method == 'POST':
+        name = request.POST.get('name', '')
+
+        # 使用 filter() 获取查询集
+        worldgeopark_queryset = Worldgeopark.objects.filter(name=name)
+
+        # 检查是否至少有一个对象
+        if worldgeopark_queryset.exists():
+            # 删除查询集中的所有匹配对象
+            worldgeopark_queryset.delete()
+
+    return redirect('success_page')
