@@ -9,32 +9,42 @@
    
 
     <link rel="stylesheet" href="{% static 'css/search.css' %}">
-
+    <script>
+            // 在页面加载时，禁用缓存
+            window.onload = function () {
+                if (window.history.replaceState) {
+                    window.history.replaceState(null, null, window.location.href);
+                }
+            };
+    </script>
 </head>
 
 
 <body>
-    <form method="post">
+    <form method="post" action="/accounts/toresult/">
+        {% csrf_token %}
         <div id="backgroung" >
             <div id="dl">
                 <div class="text">地质遗迹查询</div>
                 <br>
                 <br>
-                <div class="text1" >名称：<input class="input"  type="text" name="name"></input></div>
+                <div class="text1" >名称：<input class="input"  type="text" name="name" required></input></div>
                 <br>
-                <div class="text1" >地点：<input class="input"  type="text" name="name"></input></div>
+                <div class="text1" >地点：<input class="input"  type="text" name="地点" required></input></div>
                 <br>
-                <div class="text1" >编码：<input class="input"  type="text" name="name"></input></div>
+                <div class="text1" >编码：<input class="input"  type="text" name="编码" required></input></div>
                 <br>
 
                 <div class="but">
-                <a href="./result.html">
+                <a >
                 <button class="submit" >确定</button></a></div>
             </div>
         </div>
     </form>
+{% if not_found %}
+    <p>未找到名为 "{{ searched_name }}" 的地质遗迹。</p>
+{% endif %}
 </body>
-
 
 
 </html>

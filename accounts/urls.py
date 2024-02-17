@@ -17,5 +17,9 @@ urlpatterns = [
     path('toadd/', views.add_worldgeopark),
     path('success/', views.success_page,name='success_page'),
     path('todelete/', views.delete_worldgeopark),
-
+    path('toresult/', views.search_result),
+    path('result/', views.result_page, name='result_page'),
+    path('all/', views.all_page, name='all_page'),
+    path('all2/', views.all2_page, name='all2_page'),
+    path('all3/', views.all3_page, name='all3_page'),
 ]

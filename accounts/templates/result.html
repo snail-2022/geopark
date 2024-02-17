@@ -1,43 +1,70 @@
+{% load static %}
 <!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
 <title>Success</title>
-<link rel="stylesheet" href="./css/result.css">
+<link rel="stylesheet" href="{% static 'css/result.css' %}">
+    <script>
+            // 在页面加载时，禁用缓存
+            window.onload = function () {
+                if (window.history.replaceState) {
+                    window.history.replaceState(null, null, window.location.href);
+                // 获取查询参数
+                const params = new URLSearchParams(window.location.search);
+                const name = params.get('name');
+                // 如果有查询参数，则强制刷新页面
+                if (name) {
+                    location.reload(true);
+                        }
+                    };
 
+    </script>
 </head>
 
 
 <body>
-    <form>
+    <form >
         <div id="rest">
        查询信息显示
         </div>
+        {% for result in results %}
          <div class="tariffCards">
-         <div class="economy">
-        <img src=" " alt="Economy" height="74">
-             <h3>地质遗迹名称：</h3> <h4>{{name}}</h4>
-
+            <div class="name">
+                <img src=" " alt="name" height="74">
+                <h3>地质遗迹名称：</h3> 
+                <h4>{{result.name}}</h4>
+                <span>name</span>
             </div>
-             <div class="business">
-                <img src="" alt="Business" height="74">
+            <div class="address">
+            <img src="" alt="address" height="74">
                  <h3>地点</h3>
                  <br>
-                 <h4>{{address}}</h4>
-
+                 <h4>{{result.address}}</h4>
                  <span>address</span>
             </div>
-            <div class="first">
-                 <img src="" alt="First" height="74">
+            <div class="node">
+                 <img src="" alt="node" height="74">
                 <h3>编码</h3>
-
-                <h4>{{phone}}</h4>
-
+                <h4>{{result.id}}</h4>
                 <span>phone</span>
             </div>
+            <div class="protect">
+                <img src="" alt="protect" height="74">
+                     <h3>保护对象</h3>
+                     <br>
+                     <h4>{{result.protect}}</h4>
+                     <span>protect</span>
+            </div>
+            <div class="scene">
+                <img src="" alt="scene" height="74">
+                         <h3>人文景观</h3>
+                         <br>
+                         <h4>{{result.scene}}</h4>
+                         <span>scene</span>
+            </div>
+         {% endfor %}
         </div>
-
-       
     </form>
 
 </body>

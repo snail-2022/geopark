@@ -8,7 +8,7 @@ body {
   height: 800px;
   background-attachment: fixed;
   background-size: cover;
-  background-image: url(../img/beijing.jpg);
+  background-image: url(../images/beijing.jpg);
 }
 
 .tariffCards {
@@ -73,7 +73,7 @@ body {
   font-weight: 600;
   opacity: 0.8;
 }
-.tariffCards > div.economy {
+.tariffCards > div.name {
   margin-top: 0;
   z-index: 3;
   background-color: #c5b5e1;
@@ -87,14 +87,27 @@ body {
   background-image: linear-gradient(135deg, #c7fcf8, #acd9e3);
   box-shadow: 20px 20px 60px rgba(34, 50, 84, 0.5), 1px 1px 0px 1px #e3a9dc;
 }
-.tariffCards > div.business {
+.tariffCards > div.address {
   margin-top: -70px;
   z-index: 1;
   background-color: #a9d1c7;
   background-image: linear-gradient(135deg, #21BBFE, #2C6FD1);
   box-shadow: 20px 20px 60px rgba(34, 50, 84, 0.5), 1px 1px 0px 1px #98ffb2;
 }
-.tariffCards > div.first {
+.tariffCards > div.node {
+  margin-top: -70px;
+  background-color: #dbaed4;
+  background-image: linear-gradient(135deg, #ffb2db, #dac1d8);
+  box-shadow: 5px 5px 60px rgba(34, 50, 84, 0.1), 1px 1px 0px 1px #d6a7d7;
+}
+.tariffCards > div.protect {
+  margin-top: -70px;
+  z-index: 1;
+  background-color: #a9d1c7;
+  background-image: linear-gradient(135deg, #21BBFE, #2C6FD1);
+  box-shadow: 20px 20px 60px rgba(34, 50, 84, 0.5), 1px 1px 0px 1px #98ffb2;
+}
+.tariffCards > div.scene {
   margin-top: -70px;
   background-color: #dbaed4;
   background-image: linear-gradient(135deg, #ffb2db, #dac1d8);
