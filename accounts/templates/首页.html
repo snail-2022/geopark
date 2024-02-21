@@ -52,7 +52,7 @@
                             <a href="{% url 'manage_page' %}">地质公园管理页面</a>
                         </li>
                         <li>
-                            <a href="{% url 'all_page' %}">景点管理</a>
+                            <a >景点管理</a>
 
                         </li>
                     </ul>
@@ -63,7 +63,7 @@
                     <a>科普知识和教育</a>
                     <ul>
                         <li>
-                            <a>地质知识</a>
+                            <a href="https://www.icourse163.org/course/CUMT-1207191805?from=searchPage&outVendor=zw_mooc_pcssjg_">地质知识</a>
 
                         </li>
                         <li>
@@ -76,6 +76,10 @@
                     <img src="{% static 'images/nav_4.png' %}">
                     <a>游客服务</a>
                     <ul>
+                        <li>
+                            <a href="{% url 'path_page' %}">路径规划</a>
+
+                        </li>
                         <li>
                             <a>景区购票</a>
 
@@ -98,7 +102,7 @@
                     <img src="{% static 'images/nav_5.png' %}">
                     <a>多媒体资源</a>
                     <ul>
-                        <li><a>精美图片</a></li>
+                        <li><a href="{% url 'all_page' %}">精美图片</a></li>
                         <li><a>精选视频</a></li>
                         <li><a>地图下载</a></li>
                     </ul>

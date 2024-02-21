@@ -1,10 +1,12 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.hashers import make_password
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.cache import never_cache
 
 from .models import *
 from django.contrib import messages
+from django.contrib.auth.hashers import check_password
 
 
 # Create your views here.
@@ -37,7 +39,24 @@ def toregister_view(request):
 
 
 def register(request):
-    u = request.POST.get('user', '')
+    if request.method == 'POST':
+        u = request.POST.get('user', '')
+        p = request.POST.get('pwd', '')
+        print("here")
+        # 检查数据库中是否已存在相同的用户名
+        if Account.objects.filter(username=u).exists():
+            print("该用户名已存在，请选择另一个用户名")
+            return render(request, '注册.html', {'error_message': '该用户名已存在，请选择另一个用户名'})
+        if u and p:
+            hashed_password = make_password(p)
+            acc = Account(username=u, password=hashed_password)
+            acc.save()
+            return HttpResponse("注册成功！")
+        else:
+            return HttpResponse("请输入完整的账号和密码！")
+
+    return render(request, '注册.html')
+    '''u = request.POST.get('user', '')
     p = request.POST.get('pwd', '')
 
     if u and p:
@@ -45,7 +64,7 @@ def register(request):
         acc.save()
         return HttpResponse("注册成功！")
     else:
-        return HttpResponse("请输入完整的账号和密码！")
+        return HttpResponse("请输入完整的账号和密码！")'''
 
 
 def register_view(request):
@@ -87,6 +106,7 @@ def manage_page(request):
 def add_page(request):
     return render(request, 'add.html')
 
+
 @never_cache
 def search_page(request):
     return render(request, 'search.html')
@@ -105,6 +125,8 @@ def add_worldgeopark(request):
         # 获取表单提交的数据
         name = request.POST.get('name')
         address = request.POST.get('address')
+        longitude = request.POST.get('longitude')
+        latitude = request.POST.get('latitude')
         protect = request.POST.get('protect')
         scene = request.POST.get('scene')
 
@@ -112,6 +134,8 @@ def add_worldgeopark(request):
         worldgeopark = Worldgeopark(
             name=name,
             address=address,
+            longitude=longitude,
+            latitude=latitude,
             protect=protect,
             scene=scene
         )
@@ -125,7 +149,7 @@ def success_page(request):
     return render(request, 'success.html')
 
 
-def delete_worldgeopark(request):
+'''def delete_worldgeopark(request):
     if request.method == 'POST':
         name = request.POST.get('name', '')
 
@@ -136,6 +160,28 @@ def delete_worldgeopark(request):
         if worldgeopark_queryset.exists():
             # 删除查询集中的所有匹配对象
             worldgeopark_queryset.delete()
+
+    return redirect('success_page')'''
+
+
+def delete_worldgeopark(request):
+    if request.method == 'POST':
+        name = request.POST.get('name', '')
+        password = request.POST.get('password', '')
+
+        # 获取数据库中相应用户的密码
+        user = Account.objects.get(username='admin')  # 请替换成你的实际管理员用户名
+
+        # 检查密码是否匹配
+        if password == user.password:
+            worldgeopark_queryset = Worldgeopark.objects.filter(name=name)
+
+            if worldgeopark_queryset.exists():
+                # 删除查询集中的所有匹配对象
+                worldgeopark_queryset.delete()
+        else:
+            # 密码不正确，可以返回本页面或者给出错误提示
+            return render(request, 'detele.html', )
 
     return redirect('success_page')
 
@@ -160,7 +206,6 @@ def register(request):
     return render(request, 'register.html')  # 渲染注册页面
 
 
-
 @never_cache
 def search_result(request):
     if request.method == 'POST':
@@ -179,15 +224,23 @@ def search_result(request):
     # 如果是 GET 请求或其他情况，可以添加适当的处理
     return redirect('search_page')  # 这里假设你有名为 'search_page' 的 URL 配置
 
+
 @never_cache
 def result_page(request):
     return render(request, 'result.html')
 
+
 def all_page(request):
     return render(request, 'all.html')
+
 
 def all2_page(request):
     return render(request, 'all2.html')
 
+
 def all3_page(request):
     return render(request, 'all3.html')
+
+
+def path_page(request):
+    return render(request, 'path.html')

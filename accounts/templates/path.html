@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>路径规划</title>
+    <script type="text/javascript">
+        window._AMapSecurityConfig = {
+            securityJsCode:'368f9c365130ab5332d436503d0d7e4c',
+        }
+</script>
+<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=c75cfe9e7045c70595d8dc38941b0e64"
+></script> 
+<link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css"/>
+
+ <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" /> 
+<script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
+<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=c75cfe9e7045c70595d8dc38941b0e64&plugin=AMap.Driving"></script>
+<script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
+
+
+
+
+<!-- 三、设置地图样式 -->
+<style>
+    html,
+    body,
+    #container{
+          width: 100%;
+          height: 100%;
+          position: relative; /* 让按钮相对于容器进行定位 */
+    }
+     /* 左上角框样式 */
+     .button-container {
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            background-color: rgb(250, 250, 250);
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        
+    .button-container {
+            position: absolute; /* 绝对定位 */
+            top: 10px; /* 距离顶部的距离 */
+            left: 50px; /* 距离左侧的距离 */
+    }
+    .button-container button {
+            padding: 10px 20px;
+            background-color: #04067e;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-right: 10px;
+            font-size: 16px;
+            outline: none;
+            position: relative; /* 相对定位 */
+            overflow: hidden; /* 隐藏按钮边缘动画效果 */
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* 添加阴影效果 */
+        }
+        .button-container button:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background-color: rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+        }
+        .button-container button:hover:before {
+            width: 5px;
+            height: 5px;
+        }
+        .button-container button:hover {
+            color: #4CAF50;
+            z-index: 1;
+            transform: translateY(-5px); /* 提升按钮位置 */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* 悬停时阴影效果 */
+        }
+        .button-container button span {
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease; /* 文本放大效果 */
+        }
+        .button-container button:hover span {
+            transform: scale(1.1); /* 文本放大 */
+        }
+    </style>
+
+  
+
+
+    <style type="text/css">
+        #panel {
+            position: fixed;
+            background-color: white;
+            max-height: 90%;
+            overflow-y: auto;
+            top: 10px;
+            right: 10px;
+            width: 280px;
+        }
+        #panel .amap-call {
+            background-color: #009cf9;
+            border-top-left-radius: 4px;
+   	        border-top-right-radius: 4px;
+        }
+        #panel .amap-lib-driving {
+	        border-bottom-left-radius: 4px;
+   	        border-bottom-right-radius: 4px;
+            overflow: hidden;
+        }
+        .input-card .btn{
+            margin-right: 1.2rem;
+            width: 9rem;
+        }
+
+        .input-card .btn:last-child{
+            margin-right: 0;
+        }
+        .button-container ul {
+        list-style: none; /* 去掉列表项的小黑点 */
+        padding: 0;
+        margin: 0;
+    }
+        #resultList {
+        position: absolute;
+        top: 50px; 
+        left: 300px;  
+        padding: 10px;
+        background-color: rgb(246, 245, 248);
+        border: 1px solid #ffffffe7; 
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        z-index: 9999; /*确保显示在其他元素之上*/
+
+        }
+
+    </style>
+
+</style>
+
+
+
+</head>
+<body>
+     <!-- 二、创建地图容器 -->
+     <div id="container"></div>
+     <div id="panel"></div>
+
+     <div class="button-container">
+        <ul>
+            
+            <li><button onclick="calculateDistance()">距离量测</button></li>
+
+            <li><button onclick="calculateArea()">面积量测</button></li>
+
+            <li><button onclick="drawLine()">自定义路线</button></li>
+           
+            <li><button onclick="planDrivingRoute()">推荐驾车路线</button></li>
+            <li><button onclick="planWalkingRoute()">推荐步行路线</button></li>
+            <li><button onclick="planTransferRoute()">推荐公交路线</button></li>
+
+            <li><button onclick="clearMap()">清除已有路线</button></li>
+
+
+    
+      
+        </ul>
+        <ul id="resultList"></ul>
+
+    
+    </div>
+    
+
+
+     <div class="input-card">
+        <h4>轨迹回放控制</h4>
+        <div class="input-item">
+            <input type="button" class="btn" value="开始动画" id="start" onclick="startAnimation()"/>
+            <input type="button" class="btn" value="暂停动画" id="pause" onclick="pauseAnimation()"/>
+        </div>
+        <div class="input-item">
+            <input type="button" class="btn" value="继续动画" id="resume" onclick="resumeAnimation()"/>
+            <input type="button" class="btn" value="停止动画" id="stop" onclick="stopAnimation()"/>
+        </div>
+    </div>
+
+
+
+     <!-- <div class="button-container">
+     <button onclick="drawLine()">显示自定义路线</button>
+     <button onclick="clearMap()">清除路线</button>
+     <button onclick="planDrivingRoute()"><span>高德推荐驾车路线</span></button>
+    </div> -->
+
+
+     <script>
+        //定义一个变量，保存一个对象
+        var map = new AMap.Map('container',{
+            //mapStyle: 'amap://styles/graffiti',
+            zoom:12,
+            viewMode:'3D',
+            pitch:45,
+        })
+
+        var marker, lineArr = [[116.478935,39.997761],[116.478939,39.997825],[116.478912,39.998549],[116.478912,39.998549],[116.478998,39.998555],[116.478998,39.998555],[116.479282,39.99856],[116.479658,39.998528],[116.480151,39.998453],[116.480784,39.998302],[116.480784,39.998302],[116.481149,39.998184],
+        [116.481573,39.997997],[116.481863,39.997846],[116.482072,39.997718],[116.482362,39.997718],[116.483633,39.998935],[116.48367,39.998968],[116.484648,39.999861]];
+
+
+        AMap.plugin([ 'AMap.ToolBar',
+    'AMap.Scale',
+    'AMap.OverView',
+    'AMap.MapType',
+    //'AMap.Geolocation',
+    'AMap.ControlBar'],function(){
+        //ToolBar（工具条）：集成了缩放，平移，定位
+        //5.2添加控件
+        map.addControl(new AMap.ToolBar);
+        //scale(比例尺)
+        map.addControl(new AMap.Scale);
+        //HawkEye(鹰眼)
+        //map.addControl(new AMap.OverView({isOpen:true}));
+        map.addControl(new AMap.MapType);
+        //map.addControl(new AMap.Geolocation);
+        //map.addControl(new AMap.ControlBar);
+    })
+    map.plugin(["AMap.ControlBar"], function() {
+    var controlBar = new AMap.ControlBar({
+        position: {
+            top: '30%', // 控件顶部距离地图容器顶部的百分比
+            right: '15px' // 控件右侧距离地图容器右侧的距离
+        }
+    });
+    map.addControl(controlBar);
+});
+
+        
+        //构造路线导航类
+        /*var driving = new AMap.Driving({
+        map: map,
+        panel: "panel"
+        }); */
+       
+
+    //自定义路线模块
+    var points = [];
+    var polyline;
+
+    // 添加地图点击事件监听器
+    map.on('click', function(e) {
+        var marker = new AMap.Marker({
+            position: e.lnglat,
+            map: map
+        });
+        points.push({ location: [e.lnglat.lng, e.lnglat.lat], marker: marker });
+        if (polyline) {
+            polyline.setMap(null); // 清除之前的线
+        }
+    });
+
+    function drawLine() {
+        if (points.length < 2) {
+            alert("请至少选择两个点以绘制线。");
+            return;
+        }
+
+        // 连线
+        var lineArr = points.map(function(point) {
+            return point.location;
+        });
+
+        polyline = new AMap.Polyline({
+            path: lineArr,
+            strokeColor: "#3366FF",
+            strokeWeight: 5,
+            strokeOpacity: 1
+        });
+        polyline.setMap(map);
+    }
+
+    function clearMap() {
+        if (polyline) {
+            polyline.setMap(null);
+        }
+        points.forEach(function(point) {
+            point.marker.setMap(null);
+        });
+        points = [];
+    }
+
+    function planDrivingRoute() {
+        if (points.length < 2) {
+            alert("请至少选择两个点以规划驾车路线。");
+            return;
+        }
+
+        var start = points[0].location;
+        var end = points[points.length - 1].location;
+        var waypoints = points.slice(1, points.length - 1).map(function(point) {
+            return {
+                location: point.location
+            };
+        });
+    
+
+        AMap.plugin('AMap.Driving', function() {
+            var driving = new AMap.Driving({
+                map: map,
+                panel: "panel"
+            });
+            driving.search(start, end, { waypoints: waypoints });
+
+        });
+        clearPreviousRoute()
+
+    }
+
+    function planWalkingRoute() {
+        
+    if (points.length < 2) {
+        alert("请至少选择两个点以规划步行路线。");
+        return;
+    }
+    
+
+    var start = points[0].location;
+    var end = points[points.length - 1].location;
+    var waypoints = points.slice(1, points.length - 1).map(function(point) {
+        return {
+            location: point.location
+        };
+        
+    });
+
+    AMap.plugin('AMap.Walking', function() {
+        var walking = new AMap.Walking({
+            map: map,
+            panel: "panel"
+        });
+        walking.search(start, end, { waypoints: waypoints });
+    });
+    clearPreviousRoute()
+}
+
+
+
+function planTransferRoute() {
+    if (points.length < 2) {
+        alert("请至少选择两个点以规划公交路线。");
+        return;
+    }
+
+    var start = points[0].location;
+    var end = points[points.length - 1].location;
+    var waypoints = points.slice(1, points.length - 1).map(function(point) {
+        return {
+            location: point.location
+        };
+    });
+
+    AMap.plugin('AMap.Transfer', function() {
+        var transfer = new AMap.Transfer({
+            map: map,
+            panel: "panel"
+        });
+        transfer.search(start, end, { waypoints: waypoints });
+    });
+    clearPreviousRoute()
+}
+
+
+
+
+function clearPreviousRoute() {
+    // 清除点标记
+    for (var i = 0; i < points.length; i++) {
+        points[i].marker.setMap(null);
+    }
+    points = []; // 清空点数组
+
+    // 清除路线
+    if (polyline) {
+        polyline.setMap(null);
+    }
+}
+
+
+
+    marker = new AMap.Marker({
+        map: map,
+        position: [116.478935,39.997761],
+        icon: "https://webapi.amap.com/images/car.png",
+        offset: new AMap.Pixel(-26, -13),
+        autoRotation: true,
+        angle:-90,
+    });
+     // 绘制轨迹
+     var polyline = new AMap.Polyline({
+        map: map,
+        path: lineArr,
+        showDir:true,
+        strokeColor: "#28F",  //线颜色
+        // strokeOpacity: 1,     //线透明度
+        strokeWeight: 6,      //线宽
+        // strokeStyle: "solid"  //线样式
+    });
+    var passedPolyline = new AMap.Polyline({
+        map: map,
+        // path: lineArr,
+        strokeColor: "#AF5",  //线颜色
+        // strokeOpacity: 1,     //线透明度
+        strokeWeight: 6,      //线宽
+        // strokeStyle: "solid"  //线样式
+    });
+    marker.on('moving', function (e) {
+        passedPolyline.setPath(e.passedPath);
+    });
+
+    map.setFitView();
+
+    function startAnimation () {
+        marker.moveAlong(lineArr, 200);
+    }
+
+    function pauseAnimation () {
+        marker.pauseMove();
+    }
+    function resumeAnimation () {
+        marker.resumeMove();
+    }
+
+    function stopAnimation () {
+        marker.stopMove();
+    }
+
+
+
+    //距离量测
+   function calculateDistance(){
+   
+
+    var m1=new AMap.Marker({
+        map:map,//将m1这个点添加到map地图中
+        draggable:true,//可拖动
+        position:new AMap.LngLat(114.255025,30.621275)
+
+    })
+
+    var m2=new AMap.Marker({
+        map:map,//将m2这个点添加到map地图中
+        draggable:true,
+        position:new AMap.LngLat(114.334332,30.579608)
+        
+    })
+    //让地图根据覆盖物调整地图显示区域
+    map.setFitView()
+
+    var line = new AMap.Polyline({
+        strokeColor:'#80d8ff',//描边的颜色
+        isOutline:true,//包含轮廓
+        outerlineColor:'white',
+    })
+
+    line.setMap(map)
+
+
+    //准备文本
+    var text = new AMap.Text({
+        text:'',
+        style:{
+            'background-color':'#29b6f6',
+            'border-color':'#e1f5fe',
+            'font-size':'15px',  
+        },
+    })
+    text.setMap(map)
+
+    //计算
+    function compute(){
+        var p1 = m1.getPosition()
+        var p2 = m2.getPosition()
+
+        //text文本显示在中间
+        var textpos= p1.divideBy(2).add(p2.divideBy(2))//(p1+p2)/2
+
+        var distance =Math.round(p1.distance(p2))
+        var path =[p1,p2]
+        line.setPath(path)//绘制线
+
+        text.setText('距离为:' + distance + '米')
+        text.setPosition(textpos)
+        
+    }
+    compute()
+    //监听dragging事件
+    m1.on('dragging',compute)
+    m2.on('dragging',compute)
+}
+
+
+//面积量测
+var areapoints=[];
+    // 添加地图点击事件监听器
+    map.on('click', function(e) {
+            // 将点击位置的经纬度坐标存储在数组中
+            areapoints.push([e.lnglat.lng, e.lnglat.lat]);
+        });
+function calculateArea()
+ {
+    
+    if (areapoints.length < 3) {
+            alert("请至少选择三个点计算面积。");
+            return;
+
+}
+    // 返回点围成的闭合区域面积，单位：平方米
+    var area = AMap.GeometryUtil.ringArea(areapoints);
+
+// 创建列表项并添加到列表中
+var resultList = document.getElementById('resultList');
+var listItem = document.createElement('li');
+listItem.textContent = '面积：' + area.toFixed(2) + ' 平方米， 点坐标：' + JSON.stringify(areapoints);
+resultList.appendChild(listItem);
+
+// 显示结果列表
+resultList.style.display = 'block';
+
+// 清空点数组
+areapoints = [];
+resultList=[];
+}
+   
+     </script>
+</body>
+</html>

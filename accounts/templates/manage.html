@@ -38,7 +38,7 @@
                         
                     </li>
                     <li>
-                        <a href="{% url 'all_page' %}">景点管理</a>
+                        <a >景点管理</a>
                    
                     </li>
                 </ul>
@@ -49,7 +49,7 @@
                 <a >科普知识和教育</a>
                 <ul>
                     <li>
-                        <a>地质知识</a>
+                        <a href="https://www.icourse163.org/course/CUMT-1207191805?from=searchPage&outVendor=zw_mooc_pcssjg_">地质知识</a>
                         
                     </li>
                     <li>
@@ -62,6 +62,10 @@
                 <img src="{% static 'images/nav_4.png' %}">
                 <a>游客服务</a>
                 <ul>
+                    <li>
+                            <a href="{% url 'path_page' %}">路径规划</a>
+
+                    </li>
                     <li>
                         <a >景区购票</a>
                         
@@ -84,7 +88,7 @@
                 <img src="{% static 'images/nav_5.png' %}" >
                 <a>多媒体资源</a>
                 <ul>
-                    <li><a>精美图片</a></li>
+                    <li><a href="{% url 'all_page' %}">精美图片</a></li>
                     <li><a >精选视频</a></li>
                     <li><a >地图下载</a></li>
                 </ul>
@@ -172,25 +176,26 @@
       <script>alert("操作成功！")</script>
    </form>
 -->
-<!--注销模态框  开始-->
-<div class="modal fade bs-example-modal-sm" id="myModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog modal-sm" role="document">
-      <div class="modal-content">
-          <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title">注销</h4>
-          </div>
-          <div class="modal-body">
-              <p>确认退出该系统吗？</p>
-          </div>
-          <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-              <button type="button" class="btn btn-primary">确认</button>
-          </div>
-      </div>
-  </div>
-</div>
-<!--注销模态框  结束-->
+    <!--注销模态框  开始-->
+    <div class="modal fade bs-example-modal-sm" id="myModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">注销</h4>
+                </div>
+                <div class="modal-body">
+                    <p>确认退出该系统吗？</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary">确认</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--注销模态框  结束-->
 
 
 

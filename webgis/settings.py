@@ -29,7 +29,8 @@ SECRET_KEY = 'django-insecure-4@6lqsk+o%ff$#_nt46&l=#sb)qt!m==7=o&_y3whna)0854lz
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.0.196','rich-aphid-concise.ngrok-free.app']
+
 
 # Application definition
 
@@ -47,7 +48,10 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    ###******************************************************###
+    #记得把这个注释取消掉
+    #'django.middleware.csrf.CsrfViewMiddleware',
+    ###******************************************************###
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
